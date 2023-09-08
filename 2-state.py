@@ -1,8 +1,6 @@
 from abc import abstractmethod, ABC
 
-# state
-
-
+# State
 class Tool(ABC):
     # handler1
     @abstractmethod
@@ -48,7 +46,7 @@ class Selection(Tool):
         print("draw a line")
 
 
-# Selection1
+# Selection2
 class Brush(Tool):
     # handler
     def mouse_down(self):
