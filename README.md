@@ -4,6 +4,8 @@
 
 ### <a href="#state">2-State Pattern </a>
 
+### <a href="#iterator">3-Iterator Pattern </a>
+
 # <a id="memento">Memento Pattern</a>
 
 <img src="files/memnto.png">
@@ -39,7 +41,7 @@ you can add as many tools by this pattern by adding a new class
 think what is other scenarios exist that we should use state pattern.
 also try to add another paint tool to this pattern
 
-# <a id="state">Iterator Pattern</a>
+# <a id="iterator">Iterator Pattern</a>
 
 <img src="files/iterator.png">
 
@@ -49,6 +51,7 @@ for example in iterator.py what we do is saving and controling browsing history 
 
 here the problem is when we want to write this code in normal way, in future if we want to change our desired data structure to something else it is hard to do refactoring in our code, because we should chanage all consumers that use BorwsHistory class 
 
+## solution
 so what we do is to create an iterator class that is responsible for iterating the used data structure and all consumers instead of using data structor operators using Iterator class to get access to data, in future if we want to change our data structure only we should apply some change to iterator and history class 
 
 in example code, we have three class one is Iterator that is abstrac and we used it only as an interface, the other one is BrowsHistory class that responsible for pushing and poping data and keeping our desired data structure, another one is ListIterator inner class that inherit from Iterator class 
