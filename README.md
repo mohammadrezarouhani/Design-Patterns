@@ -16,6 +16,7 @@ that can we write content on it.
 another class is editor state that modeling editor attributes and the other one is history class that is responsible for saving and keeping editor diffrent state
 
 ## note
+
 you may ask a quesion why we dont implement all these on editor class the answer is simple because of single responsibility in SOLID priciple, that says a class only should have one and only one reason to change
 
 # <a id="state">State Pattern</a>
@@ -30,11 +31,13 @@ this is simple solution but what if we want to add more and more state during ou
 we should constantly change our class and add more if else statement. this violate open close principle that say a class should open for execution and close to modification.
 
 ## solution
+
 we can get some hand from state pattern in here base on the digram.
 we have multiple class, first one is canvas, another is Tool that have two abstract methods and the brush and selection class that inherit from Tool class
 as you can see we create canvas instance and set the tool to Selection instance and call the mouseDown and mouseUp event
 
 ## note
+
 you can add as many tools by this pattern by adding a new class
 
 ##practice
@@ -49,15 +52,31 @@ iterator pattern used when we want to store some value as history or any thing e
 
 for example in iterator.py what we do is saving and controling browsing history in a list but it is possible that we change it to tuple or dictinary or it is possible that we want a fixed array
 
-here the problem is when we want to write this code in normal way, in future if we want to change our desired data structure to something else it is hard to do refactoring in our code, because we should chanage all consumers that use BorwsHistory class 
+here the problem is when we want to write this code in normal way, in future if we want to change our desired data structure to something else it is hard to do refactoring in our code, because we should chanage all consumers that use BorwsHistory class
 
 ## solution
-so what we do is to create an iterator class that is responsible for iterating the used data structure and all consumers instead of using data structor operators using Iterator class to get access to data, in future if we want to change our data structure only we should apply some change to iterator and history class 
 
-in example code, we have three class one is Iterator that is abstrac and we used it only as an interface, the other one is BrowsHistory class that responsible for pushing and poping data and keeping our desired data structure, another one is ListIterator inner class that inherit from Iterator class 
+so what we do is to create an iterator class that is responsible for iterating the used data structure and all consumers instead of using data structor operators using Iterator class to get access to data, in future if we want to change our data structure only we should apply some change to iterator and history class
 
-when consumers want to add or delete some data they use push & pop mehtod and when they want to iterate over history they call create_itrator class and get a itrable instance from desired data structure and they can itrate throw data by calling next & prev & current & has_next method 
+in example code, we have three class one is Iterator that is abstrac and we used it only as an interface, the other one is BrowsHistory class that responsible for pushing and poping data and keeping our desired data structure, another one is ListIterator inner class that inherit from Iterator class
+
+when consumers want to add or delete some data they use push & pop mehtod and when they want to iterate over history they call create_itrator class and get a itrable instance from desired data structure and they can itrate throw data by calling next & prev & current & has_next method
 
 ## note
-in future if we change our datastructure to Array we only need some changing in BrowsHistory and ListItrator class 
 
+in future if we change our datastructure to Array we only need some changing in BrowsHistory and ListItrator class
+
+# <a id="iterator">Strategy Pattern</a>
+
+<img src="files/strategy.png">
+
+let's assume that we have an Image Storage class and we want apply some filter and also change commpress format base by client requirements like appllying some Black&White filter or HighContast and compressing image to Png Jpeg or any thing else 
+
+if we want to solve this in simple and easy way we can use some if else statement that check waht type or what filter client need and base on that applying them on image 
+
+## solution
+
+this solution violate single responsibility & open close principle for solving this we create two interface name Compressor and Filter that have compress and apply mehtod. after that we can add png class that overide compress mehtod and WBFilter class that overide apply method. 
+
+## note
+if we want to add more compress format like Jpeg we jus need creating new class and overide the compress method base by Compressor format and likewise for adding new Filter
