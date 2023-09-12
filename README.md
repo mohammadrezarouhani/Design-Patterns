@@ -85,7 +85,7 @@ this solution violate single responsibility & open close principle for solving t
 ## note
 if we want to add more compress format like Jpeg we jus need creating new class and overide the compress method base by Compressor format and likewise for adding new Filter
 
-# <a id="template">Strategy Pattern</a>
+# <a id="template">Template Pattern</a>
 
 <img src="files/template.png">
 
