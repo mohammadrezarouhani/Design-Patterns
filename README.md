@@ -80,3 +80,19 @@ this solution violate single responsibility & open close principle for solving t
 
 ## note
 if we want to add more compress format like Jpeg we jus need creating new class and overide the compress method base by Compressor format and likewise for adding new Filter
+
+# <a id="template">Strategy Pattern</a>
+
+<img src="files/template.png">
+
+let assume that we have banking app and before any opertion we should call some AuditTrail action(An audit trail is a chronological record of all activities and actions taken within a software application or system. It provides a summary of who did what,) so for implementing this you might be thinking as we create one class for each action and also a auditTrail class with record method and call it in each class 
+
+## problem
+one probem is we should repeat calling this function in each class and the other is we should implement our class structure in a we assure the recorn method in audit will be called in each class and avoid human errors
+
+## solution
+for solving this we can use strategy pattern or we create a abstrac class named Task in Task contructor we create and instance from Audit Trail class. after that we create two method one is execute that execute recode method and do_execute method. the other one is do_execute method that is protected and is an abstrac method. so now we can instanciate from Task class and add as many task as we want. 
+after this we should just override do_execute method in child class and implement our task for more info checkout the template.py code 
+
+## note
+we can have as many mehtod like do_execute that we calling them primitive method in ttemplate pattern 
