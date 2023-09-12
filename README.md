@@ -6,7 +6,7 @@
 
 ### <a href="#iterator">3-Iterator Pattern </a>
 
-### <a href="#startegy">4-Strategy Pattern </a>
+### <a href="#strategy">4-Strategy Pattern </a>
 
 ### <a href="#template">5-Template Pattern </a>
 
@@ -70,7 +70,7 @@ when consumers want to add or delete some data they use push & pop mehtod and wh
 
 in future if we change our datastructure to Array we only need some changing in BrowsHistory and ListItrator class
 
-# <a id="iterator">Strategy Pattern</a>
+# <a id="strategy">Strategy Pattern</a>
 
 <img src="files/strategy.png">
 
