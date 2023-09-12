@@ -6,6 +6,10 @@
 
 ### <a href="#iterator">3-Iterator Pattern </a>
 
+### <a href="#startegy">4-Strategy Pattern </a>
+
+### <a href="#template">5-Template Pattern </a>
+
 # <a id="memento">Memento Pattern</a>
 
 <img src="files/memnto.png">
