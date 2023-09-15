@@ -10,6 +10,10 @@
 
 ### <a href="#template">5-Template Pattern </a>
 
+### <a href="#command">6-Command Pattern </a>
+
+
+
 # <a id="memento">Memento Pattern</a>
 
 <img src="files/memnto.png">
@@ -74,29 +78,57 @@ in future if we change our datastructure to Array we only need some changing in 
 
 <img src="files/strategy.png">
 
-let's assume that we have an Image Storage class and we want apply some filter and also change commpress format base by client requirements like appllying some Black&White filter or HighContast and compressing image to Png Jpeg or any thing else 
+let's assume that we have an Image Storage class and we want apply some filter and also change commpress format base by client requirements like appllying some Black&White filter or HighContast and compressing image to Png Jpeg or any thing else
 
-if we want to solve this in simple and easy way we can use some if else statement that check waht type or what filter client need and base on that applying them on image 
+if we want to solve this in simple and easy way we can use some if else statement that check waht type or what filter client need and base on that applying them on image
 
 ## solution
 
-this solution violate single responsibility & open close principle for solving this we create two interface name Compressor and Filter that have compress and apply mehtod. after that we can add png class that overide compress mehtod and WBFilter class that overide apply method. 
+this solution violate single responsibility & open close principle for solving this we create two interface name Compressor and Filter that have compress and apply mehtod. after that we can add png class that overide compress mehtod and WBFilter class that overide apply method.
 
 ## note
+
 if we want to add more compress format like Jpeg we jus need creating new class and overide the compress method base by Compressor format and likewise for adding new Filter
 
 # <a id="template">Template Pattern</a>
 
 <img src="files/template.png">
 
-let assume that we have banking app and before any opertion we should call some AuditTrail action(An audit trail is a chronological record of all activities and actions taken within a software application or system. It provides a summary of who did what,) so for implementing this you might be thinking as we create one class for each action and also a auditTrail class with record method and call it in each class 
+let assume that we have banking app and before any opertion we should call some AuditTrail action(An audit trail is a chronological record of all activities and actions taken within a software application or system. It provides a summary of who did what,) so for implementing this you might be thinking as we create one class for each action and also a auditTrail class with record method and calling audit trail in each class
 
 ## problem
-one probem is we should repeat calling this function in each class and the other is we should implement our class structure in a we assure the recorn method in audit will be called in each class and avoid human errors
+
+one probem is we should repeat calling this function in each class and the other is when we implement our class structure we must assure that AuditTrail will be Called before in each operation in new sub classes
 
 ## solution
-for solving this we can use strategy pattern or we create a abstrac class named Task in Task contructor we create and instance from Audit Trail class. after that we create two method one is execute that execute recode method and do_execute method. the other one is do_execute method that is protected and is an abstrac method. so now we can instanciate from Task class and add as many task as we want. 
-after this we should just override do_execute method in child class and implement our task for more info checkout the template.py code 
+
+for solving this we can use strategy pattern in previous section or the template pattern taht we explai here
+we create an abstrac class named Task and in Task contructor we create and instance from Audit Trail class. after that we create two method one is execute that execute recode method and do_execute method. the other one is do_execute method that is protected and is an abstrac method. so now we can instanciate from Task class and add as many task as we want.
+after this we should just override do_execute method in child class and implement our task for more info checkout the template.py code
 
 ## note
-we can have as many mehtod like do_execute that we calling them primitive method in ttemplate pattern 
+
+we can have as many mehtod like do_execute that we calling them primitive method in ttemplate pattern
+
+
+# <a id="command">Command Pattern</a>
+
+we can use command pattern in tree senarios:
+1- when we have a service and event  and they should communicate to each other:
+    command pattern will be used as some broker for passing data from service to event 
+
+2- when we have an app that can run commposite command (multi command selection and execution)
+
+3- for implementing undo mechanism when saving data will be const exepensive and we should implement undo mechnis throw a reverse process
+
+## solution
+all of the command pattern problem we mentioned have a ABC class named Command and this class have a execute method 
+
+<img src="files/basic.py.png">
+### 1- we can solve problem1 with 2 class first of all we have Button class act as event and a CustomerService act as service. we create new class named CustomerAddCommand that inherit from Command class and pass CustomerService class ti it's constructor. inside execute method we call add_customer function inorder ro handle add functionallity. so after this, first we create a CustomerService class instance and pass it to instance of CustomerAddCommand and we also pass this command to Button class. in Button class we have click method that trigger the click functionallity we call it and new customer will be added base bu detail we provided
+
+<img src="files/composite.py.png">
+### 2- for problem 2 we just add a as many command class we need  and also create a COmposite class that have command_list array and and add fnction that get a command and add to list. in execute method we use a for loop and execute all command. so if we add our commands instance to composite class and call the execute method all command will be executed
+
+<img src="files/undo.py.png">
+### 3-for problem 3, undo mechnism we have Command class and UndoableCommand that inherit from Command, also havwe history class for saving commands also have a HtmlDocument and BoldCommand inherited from Undoable and have a prevContent attr, these are our main classes we want to do undo, also we must add an undo class. for using these pattern we create instance from Html Document and Bold Command and call execte method the will use Bold Command of HtmlDoc and make Docs contents Bold in execute method also we set prevContent atter value and add present instance of BoldCommand to History(when we create an instance from Bold we must pass Doc & History class to its constructor). at last we just need an instance of Undo class and passing history to this instance. when we call undo function. the history.pop() will be called and the result is a UndobleCommand object that we can also call unexecute this obejct. this will automatically undo the content of the document.
