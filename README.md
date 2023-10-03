@@ -98,13 +98,50 @@ let assume that we have banking app and before any opertion we should call some 
 
 ## problem
 
-one probem is we should repeat calling this function in each class and the other is when we implement our class structure we must assure that AuditTrail will be Called before in each operation in new sub classes
+one probem is we must repeat calling this function in each class and the other is when we implement our class structure we must assure that AuditTrail will be Called before in each operation in new sub classes
 
 ## solution
 
-for solving this we can use strategy pattern in previous section or the template pattern taht we explai here
-we create an abstrac class named Task and in Task contructor we create and instance from Audit Trail class. after that we create two method one is execute that execute recode method and do_execute method. the other one is do_execute method that is protected and is an abstrac method. so now we can instanciate from Task class and add as many task as we want.
-after this we should just override do_execute method in child class and implement our task for more info checkout the template.py code
+for solving this we can use strategy pattern in previous section or the template pattern taht we explain here
+in template pattern we create an abstrac class named Task and in Task contructor we pass a instance of AuditTrail class. after that we create two method one is execute that will be execute the audittail and do_execute method. the  do_execute method is an abstract and protected method and will be overrided in child classes. 
+now we can inherit from Task class, for example create a Transfer money class that inherit from Task and override the do execute method,now what happens is the client can not directly access to this do_execute method because it is protected, he must use execute method and when using it we can assure that the audit_trail operation will be executed before each task
+
+'''python
+from abc import ABC, abstractmethod
+
+
+class AuditTrail:
+    def record(self):
+        print('audited')
+
+
+class Task(ABC):
+    def __init__(self) -> None:
+        self._audit_trail = AuditTrail()
+
+    def execute(self):
+        self._audit_trail.record()
+        self._do_execute()
+
+    @abstractmethod
+    def _do_execute(self):
+        pass
+
+
+class MoneyTransfer(Task):
+    def _do_execute(self):
+        print('money transfered')
+
+
+class GenerateReport(Task):
+    def _do_execute(self):
+        print('report genrated')
+
+
+if __name__ == '__main__':
+    MoneyTransfer().execute()
+
+'''
 
 ## note
 
