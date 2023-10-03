@@ -414,6 +414,7 @@ all of the command pattern problem we mentioned have a ABC class named Command a
 ## Solving problem 1
 <img src="files/command1.png">
  we can solve problem1 with 2 class first of all we have Button class act as event and a CustomerService act as service. we create new class named CustomerAddCommand that inherit from Command class and pass CustomerService class ti it's constructor. inside execute method we call add_customer function inorder ro handle add functionallity. so after this, first we create a CustomerService class instance and pass it to instance of CustomerAddCommand and we also pass this command to Button class. in Button class we have click method that trigger the click functionallity we call it and new customer will be added base bu detail we provided
+
 ```python
 from abc import abstractmethod, ABC
 
