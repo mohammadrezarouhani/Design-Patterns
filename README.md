@@ -106,7 +106,7 @@ for solving this we can use strategy pattern in previous section or the template
 in template pattern we create an abstrac class named Task and in Task contructor we pass a instance of AuditTrail class. after that we create two method one is execute that will be execute the audittail and do_execute method. the  do_execute method is an abstract and protected method and will be overrided in child classes. 
 now we can inherit from Task class, for example create a Transfer money class that inherit from Task and override the do execute method,now what happens is the client can not directly access to this do_execute method because it is protected, he must use execute method and when using it we can assure that the audit_trail operation will be executed before each task
 
-'''python
+```python
 from abc import ABC, abstractmethod
 
 
@@ -141,7 +141,7 @@ class GenerateReport(Task):
 if __name__ == '__main__':
     MoneyTransfer().execute()
 
-'''
+```
 
 ## note
 
