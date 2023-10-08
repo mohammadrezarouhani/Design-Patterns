@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import pdb
 
 
 class Observer(ABC):
@@ -17,9 +18,9 @@ class Subject():
     def delete_observer(self, obs: Observer):
         self.observers.remove(obs)
 
-    def notify(self, value):
+    def notify(self):
         for obs in self.observers:
-            obs.update(value)
+            obs.update()
 
 
 class DataSource(Subject):
@@ -43,7 +44,7 @@ class SpreedSheet(Observer):
         super().__init__()
 
     def update(self):
-        print('spreed sheed updated'+DataSource.data)
+        print('spreed sheed updated'+self.data_source.data)
 
 
 class Chart(Observer):
@@ -51,4 +52,15 @@ class Chart(Observer):
         self.data_source = data_source
 
     def update(self):
-        print('chart updated'+DataSource.data)
+        print('chart updated'+self.data_source.data)
+
+
+if __name__=="__main__":
+    data_source=DataSource()
+    sp1=SpreedSheet(data_source)
+    chart=Chart(data_source)
+
+    data_source.add_observer(sp1)
+    data_source.add_observer(chart)
+
+    data_source.data='==> new data'

@@ -28,11 +28,11 @@ class DataSource(Subject):
         super().__init__()
 
     @property
-    def _data(self):
+    def data(self):
         return self._data
 
-    @_data.setter
-    def _data(self, value):
+    @data.setter
+    def data(self, value):
         self._data = value
         self.notify(value)
 
@@ -45,3 +45,14 @@ class SpreedSheet(Observer):
 class Chart(Observer):
     def update(self, value):
         print('chart updated'+value)
+
+
+if __name__=="__main__":
+    data_source=DataSource()
+    sp1=SpreedSheet()
+    chart=Chart()
+
+    data_source.add_observer(sp1)
+    data_source.add_observer(chart)
+
+    data_source.data='==> new data'
