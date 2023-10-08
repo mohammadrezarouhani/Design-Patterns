@@ -12,6 +12,9 @@
 
 ### <a href="#command">6-Command Pattern </a>
 
+### <a href="#observer">7-Observer Pattern </a>
+
+
 
 
 # <a id="memento">Memento Pattern</a>
@@ -591,4 +594,151 @@ if __name__ == "__main__":
     undo_command.execute()
 
     print(document.content)
+```
+
+# <a id="observer">Observer Pattern</a>
+
+observer pattern is for when we have situation if the data has changed, notify and apply this change to all the entity using this data as simple as this, also for pass data we have two scenario
+
+1- push style 
+2- pull style 
+
+let me explain these two with seperate example s
+
+## push style
+<img src="files/observer_push.png">
+
+in observer pattern we have two main class fist one is observer and the other one is subject class, the observer class is a abtract class the contain update method, when data changed this method will be executed, and the subject class has three method and a observers_list variable that hold Observer class instance, first method is add_observer and this is responsible for adding new entity that want to get notifed when data change, second one is delete_obsever and third is notify. the notify method will itrate over observer_list and execute the update method and all of the existant entity will be aware of data change. so as you can see in diagram we have DataSource class responsible for manging data and inherit from Subject. in the other hand we have SpreedSheet and Chart class, they inherit from observer class. what we do is when we create a data_source and chart and spreed_seet instance we add the to data_source observer_list and when we apply some change to data in data_source in get method we call notify method and it's done. update class in spreed_sheet and chart will be executed. but the diffrent between the push and pull style is this, we pass value in notify mehtod to observers child but in pull style we pass the data_source instance to observers child, this pull style approach give us more flexibility, when we know the data format may change in future.
+
+```python
+from abc import ABC, abstractmethod
+
+
+class Observer(ABC):
+    @abstractmethod
+    def update(self, value):
+        pass
+
+
+class Subject():
+    def __init__(self) -> None:
+        self.observers: list[Observer] = []
+
+    def add_observer(self, obs: Observer):
+        self.observers.append(obs)
+
+    def delete_observer(self, obs: Observer):
+        self.observers.remove(obs)
+
+    def notify(self, value):
+        for obs in self.observers:
+            obs.update(value)
+
+
+class DataSource(Subject):
+    def __init__(self) -> None:
+        self._data = None
+        super().__init__()
+
+    @property
+    def data(self):
+        return self._data
+
+    @data.setter
+    def data(self, value):
+        self._data = value
+        self.notify(value)
+
+
+class SpreedSheet(Observer):
+    def update(self, value):
+        print('spreed sheed updated'+value)
+
+
+class Chart(Observer):
+    def update(self, value):
+        print('chart updated'+value)
+
+
+if __name__=="__main__":
+    data_source=DataSource()
+    sp1=SpreedSheet()
+    chart=Chart()
+
+    data_source.add_observer(sp1)
+    data_source.add_observer(chart)
+
+    data_source.data='==> new data'
+```
+
+## pull style
+<img src="files/observer_pull.png">
+
+```python
+from abc import ABC, abstractmethod
+import pdb
+
+
+class Observer(ABC):
+    @abstractmethod
+    def update(self):
+        pass
+
+
+class Subject():
+    def __init__(self) -> None:
+        self.observers: list[Observer] = []
+
+    def add_observer(self, obs: Observer):
+        self.observers.append(obs)
+
+    def delete_observer(self, obs: Observer):
+        self.observers.remove(obs)
+
+    def notify(self):
+        for obs in self.observers:
+            obs.update()
+
+
+class DataSource(Subject):
+    def __init__(self) -> None:
+        self._data = None
+        super().__init__()
+
+    @property
+    def data(self):
+        return self._data
+
+    @data.setter
+    def data(self, value):
+        self._data = value
+        self.notify()
+
+
+class SpreedSheet(Observer):
+    def __init__(self, data_source: DataSource) -> None:
+        self.data_source = data_source
+        super().__init__()
+
+    def update(self):
+        print('spreed sheed updated'+self.data_source.data)
+
+
+class Chart(Observer):
+    def __init__(self, data_source: DataSource) -> None:
+        self.data_source = data_source
+
+    def update(self):
+        print('chart updated'+self.data_source.data)
+
+
+if __name__=="__main__":
+    data_source=DataSource()
+    sp1=SpreedSheet(data_source) //passing data source to observers
+    chart=Chart(data_source)
+
+    data_source.add_observer(sp1)
+    data_source.add_observer(chart)
+
+    data_source.data='==> new data'
 ```
