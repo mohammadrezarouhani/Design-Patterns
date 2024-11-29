@@ -7,7 +7,17 @@ class EditorState:
     font: str
     font_size: int
 
+class EditorHistory:
+    def __init__(self) -> None:
+        self.state: list = []
 
+    def pushHistory(self, state: EditorState):
+        self.state.append(state)
+
+    def popHistory(self) -> EditorState:
+        last_state = self.state.pop()
+        return last_state
+    
 class Editor:
     def __init__(self):
         self._content: str = ''
@@ -29,18 +39,6 @@ class Editor:
 
     def get_content(self) -> tuple:
         return (self.content, self.font, self.font_size)
-
-
-class EditorHistory:
-    def __init__(self) -> None:
-        self.state: list = []
-
-    def pushHistory(self, state: EditorState):
-        self.state.append(state)
-
-    def popHistory(self) -> EditorState:
-        last_state = self.state.pop()
-        return last_state
 
 
 if __name__ == '__main__':

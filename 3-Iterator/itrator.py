@@ -33,7 +33,7 @@ class BrowsHistory:
         return self.ListIterator(self)
 
     class ListIterator(Iterator):
-        def __init__(self, history) -> None:
+        def __init__(self, history:'BrowsHistory') -> None:
             self.history = history
             self.index = 0
 
