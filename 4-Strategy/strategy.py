@@ -9,12 +9,12 @@ class Compresor(ABC):
 
 class PngCompresor(Compresor):
     def compress(self, image):
-        print('compressing to png')
+        print("compressing to png")
 
 
 class JpegCompressor(Compresor):
     def compress(self, image):
-        print('compressing to Jpeg')
+        print("compressing to Jpeg")
 
 
 class Filter(ABC):
@@ -25,21 +25,21 @@ class Filter(ABC):
 
 class WbFilter(Filter):
     def apply(self, image):
-        print('wb filter set on image')
+        print("wb filter set on image")
 
 
 class HighContrastFilter(Filter):
     def apply(self, image):
-        print('High comress set on image')
+        print("High comress set on image")
 
 
 class ImageStorage:
     def save(self, image, filtering: Filter, compressor: Compresor):
         compressor.compress(image)
         filtering.apply(image)
-        print('image saved')
+        print("image saved")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     storage = ImageStorage()
-    storage.save('image file', HighContrastFilter(), PngCompresor())
+    storage.save("image file", HighContrastFilter(), PngCompresor())
