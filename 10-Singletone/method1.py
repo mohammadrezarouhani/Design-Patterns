@@ -1,7 +1,7 @@
 # method 1 for handling singletone
 
 
-def singletone(class_):
+def singleton(class_):
     instances = {}
     print("passed")
 
@@ -13,7 +13,7 @@ def singletone(class_):
     return get_instances
 
 
-@singletone
+@singleton
 class Database:
     def __init__(self):
         print("loading database!")

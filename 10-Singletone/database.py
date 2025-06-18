@@ -10,7 +10,7 @@ class Database:
     ):  # the problem within this aproach is, every time initialyzer will be called
         print("loading database!")
 
-    def __new__(cls, *args, **kwargs):  # we can acive it like this
+    def __new__(cls, *args, **kwargs):  # we can achive it like this
         if not cls.instance:
             cls.instance = super(Database, cls).__new__(cls, *args, **kwargs)
         return cls.instance
