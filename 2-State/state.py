@@ -13,28 +13,6 @@ class Tool(ABC):
         pass
 
 
-# Context
-class Canvas:
-    def __init__(self) -> None:
-        self._curent_tool: Tool
-
-    @property
-    def tool(self):
-        return self._curent_tool
-
-    @tool.setter
-    def tool(self, value):
-        self._curent_tool = value
-
-    # request1
-    def mouse_down(self):
-        self._curent_tool.mouse_down()
-
-    # request2
-    def mouse_up(self):
-        self._curent_tool.mouse_up()
-
-
 # Selection1
 class Selection(Tool):
     # handler
@@ -56,8 +34,27 @@ class Brush(Tool):
     def mouse_up(self):
         print("brushing")
 
-# we can also add as many class as we want
 
+# Context
+class Canvas:
+    def __init__(self) -> None:
+        self._curent_tool: Tool
+
+    @property
+    def tool(self):
+        return self._curent_tool
+
+    @tool.setter
+    def tool(self, value):
+        self._curent_tool = value
+
+    # request1
+    def mouse_down(self):
+        self._curent_tool.mouse_down()
+
+    # request2
+    def mouse_up(self):
+        self._curent_tool.mouse_up()
 
 if __name__ == "__main__":
     canvas=Canvas()
