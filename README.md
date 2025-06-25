@@ -291,6 +291,7 @@ if we want to solve this in simple and easy way we can use some if else statemen
 
 this solution violate single responsibility & open close principle for solving this we create two interface name Compressor and Filter that have compress and apply mehtod. after that we can add png class that overide compress mehtod and WBFilter class that overide apply method.
 ```python
+
 from abc import ABC, abstractmethod
 
 
