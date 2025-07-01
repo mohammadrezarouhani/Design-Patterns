@@ -2,15 +2,6 @@
 from abc import ABC
 
 
-class Switch:
-    def __init__(self):
-        self.state = OffState()
-
-    def on(self):
-        self.state.on(self)
-
-    def off(self):
-        self.state.off(self)
 
 
 class State(ABC):
@@ -38,6 +29,15 @@ class OffState(State):
         print('Turning light on...')
         switch.state = OnState()
 
+class Switch:
+    def __init__(self):
+        self.state = OffState()
+
+    def on(self):
+        self.state.on(self)
+
+    def off(self):
+        self.state.off(self)
 
 if __name__ == '__main__':
     sw = Switch()

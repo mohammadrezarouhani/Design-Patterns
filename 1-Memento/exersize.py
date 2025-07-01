@@ -12,10 +12,7 @@
 # Implement the undo feature using the memento pattern.
 
 
-
 from dataclasses import dataclass
-
-from pyparsing import ABC
 
 
 @dataclass
@@ -23,6 +20,7 @@ class EditorState:
     content: str
     font: str
     font_size: int
+
 
 class EditorHistory:
     def __init__(self) -> None:
@@ -34,11 +32,12 @@ class EditorHistory:
     def popHistory(self) -> EditorState:
         last_state = self.state.pop()
         return last_state
-    
+
+
 class Editor:
     def __init__(self):
-        self._content: str = ''
-        self._font: str = ''
+        self._content: str = ""
+        self._font: str = ""
         self._font_size: int = 0
 
     def create_state(self) -> EditorState:
@@ -49,7 +48,7 @@ class Editor:
         self.font = state.font
         self.font_size = self.font_size
 
-    def set_content(self, content: str, font: str = 'default', font_size: int = 12):
+    def set_content(self, content: str, font: str = "default", font_size: int = 12):
         self.content = content
         self.font = font
         self.font_size = font_size
@@ -58,16 +57,16 @@ class Editor:
         return (self.content, self.font, self.font_size)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     editor = Editor()
     history = EditorHistory()
 
-    editor.set_content('first content')
+    editor.set_content("first content")
     history.pushHistory(editor.create_state())
 
-    editor.set_content('second content')
+    editor.set_content("second content")
     history.pushHistory(editor.create_state())
 
-    editor.set_content('third content')
+    editor.set_content("third content")
     editor.restore_state(history.popHistory())
     print(editor.get_content())

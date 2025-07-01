@@ -17,7 +17,7 @@ class Graph:
 
     def add_node(self, node: Node):
         if type(node) == Node and node.name not in self.nodes:
-            self.add_node[node.name] = node
+            self.nodes[node.name] = node
             return True
         else:
             return False
